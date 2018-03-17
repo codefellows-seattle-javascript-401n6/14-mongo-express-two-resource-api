@@ -36,15 +36,11 @@ router.post('/', (req, res) => {
       req.body.jobs.forEach(job => {
         job = new Job({name: job.name});
         job.save()
-        // .then(job => {
-        //   console.log('saved job:', job);
-        // });
         lead.jobs.push(job);
       });
       return lead.save();
     })
     .then(lead => {
-      console.log('saved lead with jobs', lead);
       res.status(200);
       res.send(lead);
     })
