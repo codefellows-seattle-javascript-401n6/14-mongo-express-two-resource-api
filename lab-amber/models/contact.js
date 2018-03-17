@@ -16,10 +16,10 @@ let contactSchema = mongoose.Schema({
   }
 });
 
-contactSchema.methods.getLeads = function() {
-  return Lead.find({contactId: this._id});
-}
+// contactSchema.methods.getLeads = function() {
+//   return Lead.find({contactId: this._id});
+// }
 
-const Contact = mongoose.model('contact', contactSchema);
+const Contact = mongoose.model('contacts', contactSchema);
 
 module.exports = Contact;

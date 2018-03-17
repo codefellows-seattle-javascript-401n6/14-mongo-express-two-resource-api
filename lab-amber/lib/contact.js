@@ -37,44 +37,43 @@ function save(contact) {
     email: contact.email
   });
   return new Promise((resolve, reject) => {
-    contactModel.save((err, savedcontact) => {
+    contactModel.save((err, savedContact) => {
       if (err) {
         console.error(err);
       }
-      console.log('saved contact', savedContact);
       resolve(savedContact);
     });
   });
 }
 
 
-// function update(id, lead) {
-//   return new Promise((resolve, reject) => {
-//     Info.Lead.findOneAndUpdate(id, lead, (err, lead) => {
-//       if (err) {
-//         console.error(err);
-//       }
-//       resolve(lead);
-//     });
-//   });
-// }
+function update(id, contact) {
+  return new Promise((resolve, reject) => {
+    Contact.findOneAndUpdate(id, contact, (err, contact) => {
+      if (err) {
+        console.error(err);
+      }
+      resolve(contact);
+    });
+  });
+}
 
-// function remove(id) {
-//   return new Promise((resolve, reject) => {
-//     Info.Lead.remove({_id: id}, (err, lead) => {
-//       if (err) {
-//         console.error(err);
-//       }
-//       resolve(lead);
-//     });
-//   });
-// }
+function remove(id) {
+  return new Promise((resolve, reject) => {
+    Contact.remove({_id: id}, (err, contact) => {
+      if (err) {
+        console.error(err);
+      }
+      resolve(contact);
+    });
+  });
+}
 
 
 module.exports = {
   save,
   getAll,
   get,
-  // update,
-  // remove,
-}
+  update,
+  remove,
+};
