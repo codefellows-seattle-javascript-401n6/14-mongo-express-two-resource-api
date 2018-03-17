@@ -1,8 +1,10 @@
 'use strict';
 
 const mongoose = require('mongoose');
+const mongone = require('./mongone.js');
 
 const Contact = require('../models/contact.js');
+const Info = require('../models/job.js');
 
 const DATABASE_URL = process.env.MONGODB_URI || 'mongodb://localhost:27017/test';
 
@@ -24,9 +26,11 @@ function getAll() {
 
 function get(id) {
   return new Promise((resolve, reject) => {
-    Contact.findOne({_id: id}, (err, contact) => {
-      resolve(contact);
-    });
+    Contact.findOne({ _id: id })
+      .populate('jobs')
+      .then(detailed => {
+        resolve(detailed);
+      });
   });
 }
 
@@ -37,44 +41,43 @@ function save(contact) {
     email: contact.email
   });
   return new Promise((resolve, reject) => {
-    contactModel.save((err, savedcontact) => {
+    contactModel.save((err, savedContact) => {
       if (err) {
         console.error(err);
       }
-      console.log('saved contact', savedContact);
       resolve(savedContact);
     });
   });
 }
 
 
-// function update(id, lead) {
-//   return new Promise((resolve, reject) => {
-//     Info.Lead.findOneAndUpdate(id, lead, (err, lead) => {
-//       if (err) {
-//         console.error(err);
-//       }
-//       resolve(lead);
-//     });
-//   });
-// }
+function update(id, contact) {
+  return new Promise((resolve, reject) => {
+    Contact.findOneAndUpdate(id, contact, (err, contact) => {
+      if (err) {
+        console.error(err);
+      }
+      resolve(contact);
+    });
+  });
+}
 
-// function remove(id) {
-//   return new Promise((resolve, reject) => {
-//     Info.Lead.remove({_id: id}, (err, lead) => {
-//       if (err) {
-//         console.error(err);
-//       }
-//       resolve(lead);
-//     });
-//   });
-// }
+function remove(id) {
+  return new Promise((resolve, reject) => {
+    Contact.remove({ _id: id }, (err, contact) => {
+      if (err) {
+        console.error(err);
+      }
+      resolve(contact);
+    });
+  });
+}
 
 
 module.exports = {
   save,
   getAll,
   get,
-  // update,
-  // remove,
-}
+  update,
+  remove,
+};

@@ -1,7 +1,8 @@
 'use strict';
 
 const mongoose = require('mongoose');
-const Lead = require('./lead.js');
+const Info = require('./job.js');
+const Job = Info.Job;
 
 let contactSchema = mongoose.Schema({
   name: {type: String, required: true},
@@ -13,13 +14,13 @@ let contactSchema = mongoose.Schema({
     validator: function(v){
       return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(v);
     }
-  }
+  },
+  jobs: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Job'
+  }]
 });
 
-contactSchema.methods.getLeads = function() {
-  return Lead.find({contactId: this._id});
-}
-
-const Contact = mongoose.model('contact', contactSchema);
+const Contact = mongoose.model('Contact', contactSchema);
 
 module.exports = Contact;
