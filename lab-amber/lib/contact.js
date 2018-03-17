@@ -1,8 +1,10 @@
 'use strict';
 
 const mongoose = require('mongoose');
+const mongone = require('./mongone.js');
 
 const Contact = require('../models/contact.js');
+const Info = require('../models/job.js');
 
 const DATABASE_URL = process.env.MONGODB_URI || 'mongodb://localhost:27017/test';
 
@@ -24,9 +26,11 @@ function getAll() {
 
 function get(id) {
   return new Promise((resolve, reject) => {
-    Contact.findOne({_id: id}, (err, contact) => {
-      resolve(contact);
-    });
+    Contact.findOne({ _id: id })
+      .populate('jobs')
+      .then(detailed => {
+        resolve(detailed);
+      });
   });
 }
 
@@ -60,7 +64,7 @@ function update(id, contact) {
 
 function remove(id) {
   return new Promise((resolve, reject) => {
-    Contact.remove({_id: id}, (err, contact) => {
+    Contact.remove({ _id: id }, (err, contact) => {
       if (err) {
         console.error(err);
       }

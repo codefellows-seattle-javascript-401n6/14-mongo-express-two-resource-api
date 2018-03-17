@@ -4,6 +4,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const Contact = require('../models/contact.js');
+const Job = require('../models/job.js').Job;
 const contactStorage = require('../lib/contact.js');
 
 const router = express.Router();
@@ -30,10 +31,20 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  console.log('req body at route', req.body);
   contactStorage.save(req.body)
     .then(lead => {
-      console.log('***** reached router then');
+      req.body.jobs.forEach(job => {
+        job = new Job({name: job.name});
+        job.save()
+        // .then(job => {
+        //   console.log('saved job:', job);
+        // });
+        lead.jobs.push(job);
+      });
+      return lead.save();
+    })
+    .then(lead => {
+      console.log('saved lead with jobs', lead);
       res.status(200);
       res.send(lead);
     })

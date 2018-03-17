@@ -1,8 +1,9 @@
 'use strict';
 
 const mongoose = require('mongoose');
+const mongone = require('./mongone.js');
 
-const Info = require('../models/lead.js');
+const Info = require('../models/job.js');
 
 const DATABASE_URL = process.env.MONGODB_URI || 'mongodb://localhost:27017/test';
 
@@ -16,58 +17,56 @@ mongoose.connect(DATABASE_URL).then(
 
 function getAll() {
   return new Promise((resolve, reject) => {
-    Info.Lead.find((err, leads) => {
-      resolve(leads);
+    Info.Job.find((err, jobs) => {
+      resolve(jobs);
     });
   });
 }
 
 function get(id) {
   return new Promise((resolve, reject) => {
-    Info.Lead.findOne({_id: id}, (err, lead) => {
-      resolve(lead);
+    Info.Job.findOne({_id: id}, (err, job) => {
+      resolve(job);
     });
   });
 }
 
-function save(lead) {
+function save(job) {
   let quoteModel = new Info.Quote({
-    cost: lead.quote.cost
+    cost: job.quote.cost
   });
-  let leadModel = new Info.Lead({
-    name: lead.name,
-    company: lead.company,
-    email: lead.email,
+  let jobModel = new Info.Job({
+    name: job.name,
     quote: quoteModel,
   });
   return new Promise((resolve, reject) => {
-    leadModel.save((err, savedLead) => {
+    jobModel.save((err, savedjob) => {
       if (err) {
         console.error(err);
       }
-      resolve(savedLead);
+      resolve(savedjob);
     });
   });
 }
 
-function update(id, lead) {
+function update(id, job) {
   return new Promise((resolve, reject) => {
-    Info.Lead.findOneAndUpdate(id, lead, (err, lead) => {
+    Info.Job.findOneAndUpdate(id, job, (err, job) => {
       if (err) {
         console.error(err);
       }
-      resolve(lead);
+      resolve(job);
     });
   });
 }
 
 function remove(id) {
   return new Promise((resolve, reject) => {
-    Info.Lead.remove({_id: id}, (err, lead) => {
+    Info.Job.remove({_id: id}, (err, job) => {
       if (err) {
         console.error(err);
       }
-      resolve(lead);
+      resolve(job);
     });
   });
 }
@@ -79,4 +78,4 @@ module.exports = {
   get,
   update,
   remove,
-}
+};
