@@ -5,6 +5,7 @@ const jsonParser = require('body-parser').json();
 const createError = require('http-errors');
 
 const Coffee = require('../model/coffee.js');
+const Roaster = require('../model/roaster.js');
 
 const coffeeRouter = express.Router();
 
