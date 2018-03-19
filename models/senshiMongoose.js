@@ -20,11 +20,13 @@ Promise.all([
     let info = docs[0]
     let title = docs[1]
     console.log('info',info);
-    console.log('title',title);
+   return Senshi.find({name: 'Ami Mizuno'})
+   .populate('title')
     mongoose.disconnect();
 })
 .catch(err => {
     console.log('Error yo', error.message);
+    mongoose.disconnect();
 })
 
 ///////////////////////////////////////////////////
