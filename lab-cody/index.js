@@ -11,11 +11,11 @@ const routes = require('./routes/routes');
 
 app.use(bodyParser.json());
 
-app.use('/api/brews', routes); 
+app.use('/api/brews', routes);
 
 
 
-let PORT =process.env.PORT || 3000;
-app.listen(PORT, () =>{
-    console.log('http://localhost:' + PORT);
+let PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log('http://localhost:' + PORT);
 }); 
