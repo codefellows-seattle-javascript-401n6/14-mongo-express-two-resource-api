@@ -1,31 +1,37 @@
-![CF](https://camo.githubusercontent.com/70edab54bba80edb7493cad3135e9606781cbb6b/687474703a2f2f692e696d6775722e636f6d2f377635415363382e706e67) 14: Mongo/Express 2 Resource API
-===
+# MongoDB RESTful API
 
-## Submission Instructions
-* fork this repository & create a new branch for your work
-* write all of your code in a directory named `lab-` + `<your name>` **e.g.** `lab-susan`
-* push to your repository
-* submit a pull request to this repository
-* submit a link to your PR in canvas
-* write a question and observation on canvas
+**Author** : Rafael Malave
 
-## Learning Objectives  
-* students will be able to create a 2 resource MongoDB and Express API
-* students will be able to reference additional resources as part of their mongoose.js based data models
-* students will be able to use the `populate` method to allow for resource query population
+## Overview
 
-## Requirements
-#### Configuration
-* `package.json`
-* `.gitignore`
-* `README.md`
-  * your `README.md` should include detailed instructions on how to use your API
+This is a RESTful API that utilizes the MongoDB database that supports storing data
+with subdocuments.
 
-#### Feature Tasks
-* continue working on the single-resource `express` and `mongoDB` REST API that you started
-* include an additional resource that contains a "relationship" to the single resource that has already been created
-* create `GET`, `POST`, `PUT`, and `DELETE` routes for your newly added resource
-* test your application to ensure that it meets the standard criteria of a working **full CRUD** REST API
-* use `populate` in the `get()` route logic your  `/api/new-resource-name/:id`
-  route to populate the associated property used to house related resources
-  **(ex: `List.findById(req.params.id).populate('notes')`)**
+## Getting started
+
+Clone this repository to your local computer. Run `npm install` to install the necessary packages. Start the server with npm start and start mongodb on your local machine with `mongod`. run the tests by running `npm test`.
+
+To manually send requests, use [HTTPie](https://httpie.org/) or [Postman](https://www.getpostman.com/).
+
+## HTTP Methods
+
+This RESTfull HTTP server allows for the creation of car Brands resource with cars as subdocuments of each brand. 
+
+- POST endpoint `/api/owners` Suppoerted fields: `name` (string, required) cars(array of car objects); 
+
+- GET endpoints `/api/owners` and `/api/owner/:id`
+
+- PUT `/api/owner/:id` send a valid json object with the data to be updated for the selected brand
+
+- DELTE `/api/owner/id` delete the required record from the database.
+
+## Technologies
+
+- Nodejs
+- Express
+- npm
+- MongoDB
+
+
+
+
