@@ -1,0 +1,33 @@
+{
+  "name": "14-mongo-express-two-resource-api",
+  "version": "1.0.0",
+  "description": "![CF](https://camo.githubusercontent.com/70edab54bba80edb7493cad3135e9606781cbb6b/687474703a2f2f692e696d6775722e636f6d2f377635415363382e706e67) 14: Mongo/Express 2 Resource API ===",
+  "main": "server.js",
+  "scripts": {
+    "test": "jest",
+    "start:watch": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rmalave/14-mongo-express-two-resource-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rmalave/14-mongo-express-two-resource-api/issues"
+  },
+  "homepage": "https://github.com/rmalave/14-mongo-express-two-resource-api#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3",
+    "http-errors": "^1.6.2",
+    "mongoose": "^5.0.10"
+  },
+  "devDependencies": {
+    "debug": "^3.1.0",
+    "jest": "^22.4.2",
+    "randomstring": "^1.1.5",
+    "superagent": "^3.8.2"
+  }
+}
