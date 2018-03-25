@@ -76,7 +76,7 @@ describe('Contact tests', () => {
       });
   });
 
-  test('returns 200 for good post requests with valid id', (done) => {
+  test('returns 200 for good put requests with valid id', (done) => {
     let updatedLead;
     superagent.get(SERVER_URL + '/api/contacts')
       .end((err, res) => {
