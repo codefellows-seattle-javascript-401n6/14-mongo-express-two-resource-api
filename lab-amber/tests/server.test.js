@@ -1,8 +1,11 @@
 'use strict';
 
 const superagent = require('superagent');
+const Contact = require('../models/contact.js');
+const Job = require('../models/job.js');
 
 const SERVER_URL = 'http://localhost:3000';
+
 
 describe('Contact tests', () => {
 
@@ -16,13 +19,21 @@ describe('Contact tests', () => {
 
   test('returns 200 for good get requests with no id', (done) => {
     let expected;
-    superagent.get(SERVER_URL + '/api/contacts')
+    let randomNum = Math.random();
+    let newContact = ({
+      name: 'Hello',
+      company: 'World',
+      email: `${randomNum}@email.com`,
+    });
+    superagent.post(SERVER_URL + '/api/contacts')
+      .set('Content-Type', 'application/json')
+      .send(JSON.stringify(newContact))
       .end((err, res) => {
-        if (err) {
-          console.error(err);
-        }
-        expect(res.status).toBe(200);
-        done();
+        superagent.get(SERVER_URL + '/api/contacts')
+          .end((err, res) => {
+            expect(res.status).toBe(200);
+            done();
+          });
       });
   });
 
@@ -56,7 +67,7 @@ describe('Contact tests', () => {
       "quote": {
         "cost": 60000
       },
-      "jobs": [{"name": "job"}, {"name": "ace"}]
+      "jobs": [{ "name": "job" }, { "name": "ace" }]
     };
     superagent.post(SERVER_URL + '/api/contacts')
       .set('Content-Type', 'application/json')
