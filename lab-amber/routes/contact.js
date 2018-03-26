@@ -33,11 +33,13 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
   contactStorage.save(req.body)
     .then(lead => {
-      req.body.jobs.forEach(job => {
-        job = new Job({name: job.name});
-        job.save()
-        lead.jobs.push(job);
-      });
+      if (req.body.jobs) {
+        req.body.jobs.forEach(job => {
+          job = new Job({name: job.name});
+          job.save();
+          lead.jobs.push(job);
+        });
+      }
       return lead.save();
     })
     .then(lead => {
