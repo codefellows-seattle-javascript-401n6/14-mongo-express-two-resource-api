@@ -73,6 +73,11 @@ function remove(id) {
   });
 }
 
+function seed() {
+  let save() {
+    
+  }
+}
 
 module.exports = {
   save,
