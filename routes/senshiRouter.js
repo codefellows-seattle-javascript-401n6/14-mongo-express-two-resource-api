@@ -6,12 +6,10 @@ const Senshi = require('../models/senshi.js');
 const senshiMongoose = require('../models/senshiMongoose.js');
 const mongoose = require('mongoose');
 
-router.get('/', (req, res) => {
-    senshiMongoose.getSenshi()
-    .then((data) =>{
-    res.send(data),
-    console.log('done with get', data)
-    }) 
+router.get('/api/senshi/:senshiId0', (req, res, next) =>{
+    Senshi.findById(req.params.senshiId)
+    .then(senshi => res.json(senshi))
+    .catch(next);
   });
   //not seeing it on the browser//
 

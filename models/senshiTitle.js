@@ -1,8 +1,10 @@
-'use strict'
+'use strict';
 const mongoose = require('mongoose');
 let senshiTitleSchema = mongoose.Schema({
-    title:String,
+  senshiTitle:{ type: String, require: true},   
+  color:{ type: String, require: true},
+  senshiId:{type: Schema.Types.ObjectId, require: true}  
 });
-const Senshi = mongoose.model('senshiTitle', senshiTitleSchema);
+const Senshi = mongoose.model('senshiTitleSchema', senshiTitleSchema);
 
 module.exports = Senshi;

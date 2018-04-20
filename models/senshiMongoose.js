@@ -21,8 +21,8 @@ Promise.all([
     let title = docs[1]
     console.log('info',info);
    return Senshi.find({name: 'Ami Mizuno'})
-   .populate('title')
-    mongoose.disconnect();
+   .populate('senshiName')
+    mongoose.disconnect(); 
 })
 .catch(err => {
     console.log('Error yo', error.message);
