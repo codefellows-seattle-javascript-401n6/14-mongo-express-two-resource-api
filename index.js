@@ -1,16 +1,22 @@
-'use strict'
+'use strict';
 const express = require('express');
+const morgan = require('morgan');
+const cors = require('cors');
+const mongoose = require('mongoose');
+const senshiRouter = require('./routes/senshiRouter.js');
+const infoRouter = require('./routes/infoRouter.js');
+const errors = require('./lib/error-middleware.js');
+
+
 const app = express();
 const PORT = process.env.PORT || 3000;
-const senshiRouter = require('./routes/senshiRouter.js')
-const mongoose = require('mongoose');
-// const bodyparser = require('bodyparser');
+mongoose.connect('mongodb://localhost/lab13resubmit');
 
-app.use('/api/senshi', senshiRouter);
-//need to user bodyparser I think?
-//feel like I'm missing things
+app.use(cors());
+app.use(morgan('dev'));
+app.use(senshiRouter);
+app.use(infoRouter);
+app.use(erros);
 
-app.listen(PORT,() =>{
-    console.log('http://localhost:'+ PORT);
-});
+app.listen(PORT, () => console.log(`http//localhost:${PORT}`));
 

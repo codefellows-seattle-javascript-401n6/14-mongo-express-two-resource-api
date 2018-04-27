@@ -1,31 +1,34 @@
 'use strict';
 const mongoose = require('mongoose');
 const createError = require('http-errors');
-const Title = require('./senshiTitle.js');
-
+const SenshiInfo = require('./senshiInfo.js');
+const createError = require('http-errors');
 let senshiSchema = mongoose.Schema({
   name:{ type: String, require: true},
-  age:{ type: String, require: true}, 
-  senshiTitle: [{type: Schema.Types.ObjectId, ref: 'title'}]
+  age:{ type: String, require: true},
+  senshiInfos: [{type: Schema.Types.ObjectId, ref: 'senshiInfo'}]
 });
 const Senshi = mongoose.model('senshi', senshiSchema);
-
 module.exports = Senshi;
 
-Senshi.findByIdAddTitle = function(id, title){
+Senshi.findByIdAndAddinfo = function(id, senshiInfo){
   return Senshi.findById(id)
-  .then(senshi => {
-    title.senshiId = senshi._id;
+  .then(senshi =>{
+    //assigns the senshi id to the senshiInfo
+    senshiInfo.senshiID = senshi._id;
     this.tempSenshi = senshi;
-    return new Senshi(senshi).save();
+    return new SenshiInfo(senshiInfo).save(); 
+    //If I return a value from within my then block
+    //it will pass the corresponding value into the next block
   })
-  .then( title =>{
-    this.tempSenshi.senshiTitle.push(senshi._id);
-    this.tempTitle = title;
+  .then(senshiInfo => {
+    //pushing id into senshiInfo property 
+    this.tempSenshi.senshiInfos.push(senshiInfo._id);
+    this.tempinfo = senshiInfo;
     return this.tempSenshi.save();
+  }) 
+  .then( () =>{
+    return this.tempNote;
   })
-  .then(() => {
-    return this.tempSenshi;
-  })
-  .catch(err => Promise.reject(createError(404, err.message)));
-};
+  .catch(err => Promise.reject(createError(404, err.message)))
+}
