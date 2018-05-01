@@ -85,6 +85,7 @@ describe('Senshi Routes', function(){
     
         superagent.get(`${url}/api/senshi/${tempSenshi.body._id}`)
         .end((err, res) =>{
+          console.log('88 url ', `${url}/api/senshi/${tempSenshi.body._id}`)
           if(err) return done(err);
           expect(res.status).toEqual(200);
           expect(res.body.name).toEqual('Usagi Tsukino');
@@ -115,7 +116,7 @@ describe('DELETE: /api/senshi/:senshiId', function(){
       superagent.delete(`${url}/api/senshi/${tempSenshi.body._id}`)
       .end((err, res) =>{
         if(err) return done(err);
-        console.log('118 delete', res.body);
+
         expect(res.status).toEqual(204);
         done();
       });

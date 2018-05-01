@@ -2,16 +2,18 @@
 const mongoose = require('mongoose');
 const createError = require('http-errors');
 const SenshiInfo = require('./senshiInfo.js');
-const createError = require('http-errors');
-let senshiSchema = mongoose.Schema({
+const Schema = mongoose.Schema;
+
+let senshiSchema = Schema({
   name:{ type: String, require: true},
   age:{ type: String, require: true},
-  senshiInfos: [{type: Schema.Types.ObjectId, ref: 'senshiInfo'}]
+  senshiInfos:[{type: Schema.Types.ObjectId, ref: 'senshiInfo'}]
 });
 const Senshi = mongoose.model('senshi', senshiSchema);
 module.exports = Senshi;
 
 Senshi.findByIdAndAddinfo = function(id, senshiInfo){
+
   return Senshi.findById(id)
   .then(senshi =>{
     //assigns the senshi id to the senshiInfo
@@ -24,11 +26,15 @@ Senshi.findByIdAndAddinfo = function(id, senshiInfo){
   .then(senshiInfo => {
     //pushing id into senshiInfo property 
     this.tempSenshi.senshiInfos.push(senshiInfo._id);
-    this.tempinfo = senshiInfo;
+    console.log('30 tempSenshi', this.tempSenshi);
+
+    // this.tempinfo = senshiInfo;
     return this.tempSenshi.save();
   }) 
   .then( () =>{
-    return this.tempNote;
+    console.log('35 tempSenshi', this.tempSenshi);
+
+    return this.tempSenshi;
   })
   .catch(err => Promise.reject(createError(404, err.message)))
 }

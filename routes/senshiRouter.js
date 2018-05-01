@@ -22,15 +22,18 @@ senshiRouter.get('/api/senshi', (req, res, next) =>{
 //POST a senshi, and when the list is GET at a senshi time
 //the senshi will populate with senshiInfo
 senshiRouter.post('/api/senshi', jsonParser, function (req, res, next){
-  console.log('19 body',req.body);
+
   new Senshi(req.body).save()
-  .then( senshi => res.json(senshi))
+  .then( senshi => {
+    console.log('28 senshi body', senshi.body);
+    res.json(senshi);
+  })
   .catch(next);
 });
 
 
 
-senshiInfoRouter.put('/api/senshi/:senshiId', jsonParser, (req, res, next) =>{
+senshiRouter.put('/api/senshi/:senshiId', jsonParser, (req, res, next) =>{
   Senshi.findByIdAndUpdate(req.params.senshiId, req.body, {new: true})
   .then( senshi => res.json(senshi))
   .catch(err =>{

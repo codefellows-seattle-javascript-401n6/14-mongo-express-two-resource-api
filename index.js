@@ -1,10 +1,11 @@
 'use strict';
 const express = require('express');
 const morgan = require('morgan');
+
 const cors = require('cors');
 const mongoose = require('mongoose');
 const senshiRouter = require('./routes/senshiRouter.js');
-const infoRouter = require('./routes/infoRouter.js');
+const senshiInfoRouter = require('./routes/infoRouter.js');
 const errors = require('./lib/error-middleware.js');
 
 
@@ -15,8 +16,8 @@ mongoose.connect('mongodb://localhost/lab13resubmit');
 app.use(cors());
 app.use(morgan('dev'));
 app.use(senshiRouter);
-app.use(infoRouter);
-app.use(erros);
+app.use(senshiInfoRouter);
+app.use(errors);
 
 app.listen(PORT, () => console.log(`http//localhost:${PORT}`));
 

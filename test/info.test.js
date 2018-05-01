@@ -1,7 +1,7 @@
 'use strict';
 
 const superagent = require('superagent');
-const Senshi = require('../models/senshi.js');
+// const Senshi = require('../models/senshi.js');
 const SenshiInfo = require('../models/senshiInfo.js');
 const PORT = process.env.PORT || 3000;
 
@@ -10,14 +10,12 @@ const url = `http://localhost:${PORT}`;
 
 const exampleInfo = {
   title: 'Sailor Saturn',
-  color : 'Purple'
-  
+  color : 'Purple' 
 };
 
 const exampleSenshi = {
   name: 'Hotaru Tomoe',
-  age: '14'
-  
+  age: '14'  
 };
 
 describe('Info Routes', function(){
@@ -34,17 +32,18 @@ describe('Info Routes', function(){
         done();
       });
     });
-
+//info post is working, the data isn't making it into that end block for some reason. 
     it('should return info', done => {
     
       superagent.post(`${url}/api/senshi/${tempSenshi.body._id}/info`)
       .send(exampleInfo)
       .end((err, res) => {
-        console.log('39 res', res);
+        console.log('42 res...............');
+        console.log('43 res', res);
         if(err) {
           return done(err);
         }
-        expect(res.body.name).toEqual(exampleSenshi.name);
+        expect(res.body.senshiInfos).toEqual([`${tempSenshi.body._id}`]);
         done();
       })
       .catch( err =>{
