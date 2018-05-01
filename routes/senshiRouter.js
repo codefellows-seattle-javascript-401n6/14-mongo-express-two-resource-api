@@ -1,41 +1,51 @@
-'use strict'
-const express = require('express');
-const router = express.Router();
+'use strict';
 
+const Router = require('express').Router;
+const jsonParser = require('body-parser').json();
+const createError = require('http-errors');
 const Senshi = require('../models/senshi.js');
-const senshiMongoose = require('../models/senshiMongoose.js');
-const mongoose = require('mongoose');
+const senshiRouter = module.exports = new Router();
 
-router.get('/', (req, res) => {
-    senshiMongoose.getSenshi()
-    .then((data) =>{
-    res.send(data),
-    console.log('done with get', data)
-    }) 
-  });
-  //not seeing it on the browser//
-
-router.get(`/:id`,(req,res)=>{
+senshiRouter.get('/api/senshi/:senshiId', (req, res, next) =>{
  
-    res.send(senshi);
-    console.log('get senshi',senshi)
+  Senshi.findById(req.params.senshiId)
+    .populate('senshiInfos')
+    .then(senshi => res.json(senshi))
+    .catch(next);
 });
-// router.post(`/`,(req,res)=>{
-//     const senshi = [new Senshi('Sailor Jupiter','  Makoto Kino',' Lightning Magic/Martial Arts',' Inner Senshi')]
-//     res.send(JSON.stringify(senshi));
-// });
 
-// router.put(`/`,(req,res)=>{
-//     const senshi = [new Senshi('Sailor Jupiter','  Makoto Kino',' Lightning Magic/Martial Arts',' Inner Senshi')]
-//     res.send(JSON.stringify(senshi));
-// });
-//delete wont need a route
-router.delete(`/`,(req,res)=>{
-    senshiMongoose.deleteSenshi()
-    .then((data) =>{
-    res.send(data),
-    console.log('done with get', data)
-    }) 
+senshiRouter.get('/api/senshi', (req, res, next) =>{
+  Senshi.find({})
+    .then(senshi => res.json(senshi))
+    .catch(next);
 });
-module.exports = router;
+//POST a senshi, and when the list is GET at a senshi time
+//the senshi will populate with senshiInfo
+senshiRouter.post('/api/senshi', jsonParser, function (req, res, next){
 
+  new Senshi(req.body).save()
+  .then( senshi => {
+    console.log('28 senshi body', senshi.body);
+    res.json(senshi);
+  })
+  .catch(next);
+});
+
+
+
+senshiRouter.put('/api/senshi/:senshiId', jsonParser, (req, res, next) =>{
+  Senshi.findByIdAndUpdate(req.params.senshiId, req.body, {new: true})
+  .then( senshi => res.json(senshi))
+  .catch(err =>{
+    if(err.name === 'ValidationError') return next(err);
+    next(createError(404, err.message));
+  });
+});
+
+
+
+senshiRouter.delete('/api/senshi/:senshiId', (req, res, next) => {
+  Senshi.findByIdAndRemove(req.params.senshiId)
+  .then( () => res.status(204).send())
+  .catch( err => next(createError(404, err.message)));
+});
