@@ -25,7 +25,7 @@ senshiRouter.post('/api/senshi', jsonParser, function (req, res, next){
 
   new Senshi(req.body).save()
   .then( senshi => {
-    console.log('28 senshi body', senshi.body);
+    console.log('28 senshi body', senshi);
     res.json(senshi);
   })
   .catch(next);
