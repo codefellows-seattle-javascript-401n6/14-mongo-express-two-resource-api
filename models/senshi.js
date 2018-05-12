@@ -26,13 +26,11 @@ Senshi.findByIdAndAddinfo = function(id, senshiInfo){
   .then(senshiInfo => {
     //pushing id into senshiInfo property 
     this.tempSenshi.senshiInfos.push(senshiInfo._id);
-    console.log('30 tempSenshi', this.tempSenshi);
 
     // this.tempinfo = senshiInfo;
     return this.tempSenshi.save();
   }) 
   .then( () =>{
-    console.log('35 tempSenshi', this.tempSenshi);
 
     return this.tempSenshi;
   })
