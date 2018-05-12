@@ -1,0 +1,29 @@
+{
+  "name": "14-mongo-express-two-resource-api",
+  "version": "1.0.0",
+  "description": "![CF](https://camo.githubusercontent.com/70edab54bba80edb7493cad3135e9606781cbb6b/687474703a2f2f692e696d6775722e636f6d2f377635415363382e706e67) 14: Mongo/Express 2 Resource API\r ===",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ixnp/14-mongo-express-two-resource-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ixnp/14-mongo-express-two-resource-api/issues"
+  },
+  "homepage": "https://github.com/ixnp/14-mongo-express-two-resource-api#readme",
+  "dependencies": {
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "http-errors": "^1.6.3",
+    "jest": "^22.4.3",
+    "mongoose": "^5.0.11",
+    "morgan": "^1.9.0",
+    "superagent": "^3.8.2"
+  }
+}
