@@ -3,16 +3,17 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
-const Beer = require('../models/beer'); 
+const Beer = require('../models/beer');
 const Recipe = require('../models/recipe').Recipe;
-const beerStorage = require('../lib/beer'); 
+const beerStorage = require('../lib/beer');
 
 const router = express.Router();
 
 router.get('/', (req, res) => {
   if (req.query.id) {
     let id = req.query.id;
-    beerStorage.get(id)
+    beerStorage
+      .get(id)
       .then(beer => {
         res.send(beer);
       })
@@ -20,7 +21,8 @@ router.get('/', (req, res) => {
         console.error(err);
       });
   } else {
-    beerStorage.getAll()
+    beerStorage
+      .getAll()
       .then(beers => {
         res.send(beers);
       })
@@ -31,9 +33,9 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-
-  console.log(req.body, 'req.body is ?');//at this point req.body has all the info it is supposed to.
-  beerStorage.save(req.body)
+  console.log(req.body, 'req.body is ?'); //at this point req.body has all the info it is supposed to.
+  beerStorage
+    .save(req.body)
     .then(brews => {
       console.log(brews, 'what is brews?');
       //   console.log(recipe, 'what is recipe?');
@@ -41,9 +43,8 @@ router.post('/', (req, res) => {
         console.log(recipes, 'what is recipe here?');
 
         recipe = new Recipe({
-          fermentables: recipe.fermentables,
-          hops: recipe.hops,
-          yeast: recipe.yeast});
+          hops: recipe.hops
+        });
         recipe.save();
         brews.recipes.push(recipe);
       });
@@ -59,7 +60,8 @@ router.post('/', (req, res) => {
 });
 
 router.put('/', (req, res) => {
-  beerStorage.update(req.query.id, req.body)
+  beerStorage
+    .update(req.query.id, req.body)
     .then(beer => {
       res.status(200);
       res.send('updated successfully');
@@ -70,7 +72,8 @@ router.put('/', (req, res) => {
 });
 
 router.delete('/', (req, res) => {
-  beerStorage.remove(req.query.id)
+  beerStorage
+    .remove(req.query.id)
     .then(beer => {
       res.status(204);
       res.send('deleted successfully');
